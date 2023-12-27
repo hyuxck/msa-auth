@@ -1,0 +1,25 @@
+// prisma/schema.prisma
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// prisma/schema.prisma
+
+model Article {
+  id          Int      @id @default(autoincrement()) // 이 필드가 자동으로 증가하고 새로 생성된 레코드에 할당되야 함을 의미
+  title       String   @unique
+  description String? // ? >> 해당 필드는 선택사항이라는 뜻
+  body        String
+  published   Boolean  @default(false) // 해당 기사가 초안 모드인지 아닌지를 나타내는 플래그
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt // 기사가 수정될 때마다 현재 타임스탬프로 필드를 자동으로 업데이트
+}
